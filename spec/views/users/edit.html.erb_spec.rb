@@ -4,8 +4,7 @@ describe "users/edit" do
   before(:each) do
     @user = assign(:user, stub_model(User,
       :name => "MyString",
-      :email => "MyString",
-      :string => "MyString"
+      :email => "MyString"
     ))
   end
 
@@ -16,7 +15,6 @@ describe "users/edit" do
     assert_select "form", :action => users_path(@user), :method => "post" do
       assert_select "input#user_name", :name => "user[name]"
       assert_select "input#user_email", :name => "user[email]"
-      assert_select "input#user_string", :name => "user[string]"
     end
   end
 end
