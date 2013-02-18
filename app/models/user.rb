@@ -25,7 +25,25 @@ class User < ActiveRecord::Base
     Digest::SHA256.hexdigest("--#{salt}--#{raw_password}--")
   end
   
+  # This function takes an email (as a string) and the plain_text_password
+  # (as the user would have typed it in a web form), and should return:
+  #   * if the email doesn't exist in the database, or the password given
+  #     does not match the password for the given user, return nil
+  #   * if the user with the given email has the password provided,
+  #     return that user.
+  # 
+  # You may wish to review the slides from lecture_3, which have references
+  # to using the "find" functions provided by active record so that you
+  # can locate the correct user in the database.
   def self.authenticate(email, plain_text_password)
-    nil
+    testUser = User.find_by_email(email)
+    if ! testUser
+	nil
+    elsif testUser.encrypt(plain_text_password) == testUser.hashed_password
+	testUser
+    else
+	nil
+    end
   end
 end
+
